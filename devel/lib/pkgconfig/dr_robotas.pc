@@ -1,7 +1,7 @@
 prefix=/home/naudotvardis/ROS_ws/devel
 
-Name: r2d2
-Description: Description of r2d2
+Name: dr_robotas
+Description: Description of dr_robotas
 Version: 0.0.0
 Cflags: 
 Libs: -L${prefix}/lib 

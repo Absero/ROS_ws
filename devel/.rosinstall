@@ -1,2 +1,2 @@
 - setup-file:
-    local-name: C:/ROS_ws/devel/setup.sh
+    local-name: /home/naudotvardis/ROS_ws/devel/setup.sh
