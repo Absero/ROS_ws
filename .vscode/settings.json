@@ -1,0 +1,9 @@
+{
+    "files.associations": {
+        "xstring": "cpp"
+    },
+    "ros.distro": "melodic",
+    "python.autoComplete.extraPaths": [
+        "C:/opt/ros/melodic/x64\\lib/site-packages"
+    ]
+}
