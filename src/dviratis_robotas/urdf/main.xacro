@@ -1,22 +1,23 @@
 <?xml version="1.0"?>
-<robot name="dr_robotas" xmlns:xacro="http://www.ros.org/wiki/xacro">
+<robot name="dr_robotas"
+  xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="C:\ROS_ws\src\dr_robotas\model\colors.xacro" />
-  <xacro:include filename="C:\ROS_ws\src\dr_robotas\model\macros.xacro" />
-  <xacro:include filename="C:\ROS_ws\src\dr_robotas\model\param.xacro" />  
-  
+  <xacro:include filename="$(find dviratis_robotas)/urdf/colors.xacro" />
+  <xacro:include filename="$(find dviratis_robotas)/urdf/macros.xacro" />
+  <xacro:include filename="$(find dviratis_robotas)/urdf/param.xacro" />
+
   <!-- links -->
   <link name="base_link">
     <visual name="base_link_visual">
       <geometry>
-          <box size="${total_length} ${total_width} ${base_z}" />
+        <box size="${total_length} ${total_width} ${base_z}" />
       </geometry>
       <origin xyz="${(total_length-pcb_x)/2+pcb_x_offset-base_padding} 0 0"/>
       <material name="orange"/>
     </visual>
     <collision name="base_link_collision">
       <geometry>
-          <box size="${total_length} ${total_width} ${base_z}" />
+        <box size="${total_length} ${total_width} ${base_z}" />
       </geometry>
       <origin xyz="${(total_length-pcb_x)/2+pcb_x_offset-base_padding} 0 0"/>
     </collision>
@@ -35,27 +36,27 @@
   <xacro:wheel_link name="right_wheel_link"/>
   <xacro:wheel_link name="left_wheel_link"/>
 
-  
+
   <link name="caster_front_link">
     <visual name='caster_visual'>
-        <geometry>
-            <sphere radius="${caster_wheel_r}"/>
-        </geometry>
+      <geometry>
+        <sphere radius="${caster_wheel_r}"/>
+      </geometry>
     </visual>
     <collision name='caster_collision'>
-        <geometry>
-            <sphere radius="${caster_wheel_r}"/>
-        </geometry>
-        <surface>
-            <friction>
-                <ode>
-                    <mu>0</mu>
-                    <mu2>0</mu2>
-                    <slip1>1.0</slip1>
-                    <slip2>1.0</slip2>
-                </ode>
-            </friction>
-        </surface>
+      <geometry>
+        <sphere radius="${caster_wheel_r}"/>
+      </geometry>
+      <surface>
+        <friction>
+          <ode>
+            <mu>0</mu>
+            <mu2>0</mu2>
+            <slip1>1.0</slip1>
+            <slip2>1.0</slip2>
+          </ode>
+        </friction>
+      </surface>
     </collision>
   </link>
 
@@ -71,7 +72,7 @@
     <child link="pcb"/>
     <origin xyz="${pcb_x_offset} 0 ${pcb_z/2+base_z/2}"/>
   </joint>
-  
+
   <joint name="base_to_rwheel" type="continuous">
     <parent link="base_link"/>
     <child link="right_wheel_link"/>

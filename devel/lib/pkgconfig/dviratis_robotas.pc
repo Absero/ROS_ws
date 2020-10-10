@@ -1,0 +1,8 @@
+prefix=/home/naudotvardis/ROS_ws/devel
+
+Name: dviratis_robotas
+Description: Description of dviratis_robotas
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 
