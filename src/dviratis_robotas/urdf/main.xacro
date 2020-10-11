@@ -2,9 +2,7 @@
 <robot name="dr_robotas"
   xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find dviratis_robotas)/urdf/colors.xacro" />
   <xacro:include filename="$(find dviratis_robotas)/urdf/macros.xacro" />
-  <xacro:include filename="$(find dviratis_robotas)/urdf/param.xacro" />
 
   <!-- links -->
   <link name="base_link">
@@ -88,5 +86,33 @@
     <limit effort="10000" velocity="1000"/>
     <joint_properties damping="1.0" friction="1.0"/>
   </joint>
+
+
+  <transmission name="left_wheel_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_lwheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="left_wheel_actuator">
+      <mechanicalReduction>7</mechanicalReduction>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <transmission name="right_wheel_transmission">
+    <type>transmission_interface/SimpleTransmission</type>
+    <joint name="base_to_rwheel">
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </joint>
+    <actuator name="right_wheel_actuator">
+      <mechanicalReduction>7</mechanicalReduction>
+      <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
+    </actuator>
+  </transmission>
+
+  <gazebo>
+    <plugin name="gazebo_ros_control" filename="libgazebo_ros_contol.so">
+    </plugin>
+  </gazebo>
 
 </robot>
