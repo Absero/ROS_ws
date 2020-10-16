@@ -59,7 +59,7 @@
 		</joint>
 
 		<joint name="base_to_batt" type="fixed">
-			<parent link="base_link"/>
+			<parent link="chassis_link"/>
 			<child link="${name}_batt"/>
 			<origin xyz="${x} ${y+batt_y/2-(batt_y+rpy_y)/2} ${z}"/>
 		</joint>

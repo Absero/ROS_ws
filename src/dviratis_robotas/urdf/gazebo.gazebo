@@ -1,29 +1,20 @@
 <?xml version="1.0" ?>
 
 <robot>
-    <transmission name="left_wheel_transmission">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="base_to_lwheel">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="left_wheel_actuator">
-            <mechanicalReduction>7</mechanicalReduction>
-            <hardwareInterface>VelocityJointInterface</hardwareInterface>
-        </actuator>
-    </transmission>
-    <transmission name="right_wheel_transmission">
-        <type>transmission_interface/SimpleTransmission</type>
-        <joint name="base_to_rwheel">
-            <hardwareInterface>hardware_interface/VelocityJointInterface</hardwareInterface>
-        </joint>
-        <actuator name="right_wheel_actuator">
-            <mechanicalReduction>7</mechanicalReduction>
-            <hardwareInterface>VelocityJointInterface</hardwareInterface>
-        </actuator>
-    </transmission>
     <gazebo>
-        <plugin name="gazebo_ros_control" filename="libgazebo_ros_contol.so">
+        <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+            <alwaysOn>true</alwaysOn>
+            <updateRate>20</updateRate>
+            <leftJoint>left_wheel_hinge</leftJoint>
+            <rightJoint>right_wheel_hinge</rightJoint>
+            <wheelSeparation>0.026</wheelSeparation>
+            <wheelDiameter>0.034</wheelDiameter>
+            <torque>20</torque>
+            <commandTopic>cmd_vel</commandTopic>
+            <odometryTopic>odom</odometryTopic>
+            <odometryFrame>odom_link</odometryFrame>
+            <robotBaseFrame>base_link</robotBaseFrame>
+            <legacyMode>false</legacyMode>
         </plugin>
     </gazebo>
-
 </robot>
