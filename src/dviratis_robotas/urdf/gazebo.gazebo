@@ -5,16 +5,27 @@
         <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
             <alwaysOn>true</alwaysOn>
             <updateRate>20</updateRate>
-            <leftJoint>left_wheel_hinge</leftJoint>
-            <rightJoint>right_wheel_hinge</rightJoint>
-            <wheelSeparation>0.026</wheelSeparation>
-            <wheelDiameter>0.034</wheelDiameter>
-            <torque>20</torque>
+            <leftJoint>base_to_lwheel</leftJoint>
+            <rightJoint>base_to_rwheel</rightJoint>
+            <wheelSeparation>${wheel_w*2}</wheelSeparation>
+            <wheelDiameter>${wheel_r*2}</wheelDiameter>
+            <wheelTorque>${wheel_m}</wheelTorque>
             <commandTopic>cmd_vel</commandTopic>
             <odometryTopic>odom</odometryTopic>
             <odometryFrame>odom_link</odometryFrame>
             <robotBaseFrame>base_link</robotBaseFrame>
             <legacyMode>false</legacyMode>
+        </plugin>
+    </gazebo>
+
+    <gazebo>
+        <plugin name="imu_plugin" filename="libgazebo_ros_imu.so">
+            <alwaysOn>true</alwaysOn>
+            <bodyName>base_link</bodyName>
+            <topicName>imu</topicName>
+            <serviceName>imu_service</serviceName>
+            <gaussianNoise>0.1</gaussianNoise>
+            <updateRate>20.0</updateRate>
         </plugin>
     </gazebo>
 </robot>
