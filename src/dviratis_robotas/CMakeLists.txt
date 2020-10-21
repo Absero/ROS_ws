@@ -11,6 +11,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   tf
+  gazebo_ros
 )
 
 ## System dependencies are found with CMake's conventions
@@ -118,7 +119,10 @@ catkin_package(
 include_directories(
 # include
   ${catkin_INCLUDE_DIRS}
+  ${src}
+  ${GAZEBO_INCLUDE_DIRS}
 )
+list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
