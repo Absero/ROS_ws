@@ -3,8 +3,8 @@
 
     <!-- Define parameter for the differential drive robot -->
     <!-- Parameter for the chassis, size [m] and mass [kg] -->
-    <xacro:property name="x_chassis" value="0.23" />
-    <xacro:property name="y_chassis" value="0.12" />
+    <xacro:property name="x_chassis" value="0.27" />
+    <xacro:property name="y_chassis" value="0.15" />
     <xacro:property name="z_chassis" value="0.01" />
     <xacro:property name="m_chassis" value="1.0" />
 
@@ -20,9 +20,9 @@
     <xacro:property name="h_camera" value="0.1" />
 
     <!-- Radar parameters -->
-    <xacro:property name="x_radar" value="0.1" />
-    <xacro:property name="y_radar" value="0.1" />
-    <xacro:property name="z_radar" value="0.1" />
+    <xacro:property name="x_radar" value="0.01" />
+    <xacro:property name="y_radar" value="0.065" />
+    <xacro:property name="z_radar" value="0.085" />
 
 
     <!-- Parameters for the Hukoyu Laser -->
