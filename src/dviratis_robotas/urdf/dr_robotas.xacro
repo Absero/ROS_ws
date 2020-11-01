@@ -44,9 +44,9 @@
 
 		<!-- RPY and batt block -->
 		<collision name='batt_rpy_collision'>
-			<origin xyz="${-0.03} 0 ${0.02+z_chassis/2}" rpy=" 0 0 0"/>
+			<origin xyz="${offset_rpybat} 0 ${z_rpybat/2+z_chassis/2}" rpy=" 0 0 0"/>
 			<geometry>
-				<box size="${0.12} ${0.1} ${0.04}" />
+				<box size="${x_rpybat} ${y_rpybat} ${z_rpybat}" />
 			</geometry>
 			<surface>
 				<friction>
@@ -60,9 +60,9 @@
 			</surface>
 		</collision>
 		<visual name='batt_rpy_visual'>
-			<origin xyz="${-0.03} 0 ${0.02+z_chassis/2}" rpy=" 0 0 0"/>
+			<origin xyz="${offset_rpybat} 0 ${z_rpybat/2+z_chassis/2}" rpy=" 0 0 0"/>
 			<geometry>
-				<box size="${0.12} ${0.1} ${0.04}" />
+				<box size="${x_rpybat} ${y_rpybat} ${z_rpybat}" />
 			</geometry>
 			<material name="red">
 				<color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
@@ -103,13 +103,55 @@
 			</geometry>
 			<material name="red"/>
 		</visual>
+		<collision>
+			<geometry>
+				<box size="${x_radar} ${y_radar} ${z_radar}" />
+			</geometry>
+		</collision>
 	</link>
 
 	<joint type="fixed" name="base_link_to_radar">
-		<origin xyz="${0.04+x_radar/2} 0 ${z_radar/2+z_chassis/2}" rpy="0 0 0"/>
+		<origin xyz="${0.015+x_radar/2+x_rpybat/2+offset_rpybat} 0 ${z_radar/2+z_chassis/2}" rpy="0 0 0"/>
 		<child link="radar"/>
 		<parent link="base_link"/>
 	</joint>
+
+	<!-- Camera -->
+	<link name="camera">
+		<!-- lens -->
+		<visual name="cam_lens_visual">
+			<geometry>
+				<cylinder radius="${r_camera}" length="${h_camera}"/>
+			</geometry>
+			<material name="grey"/>
+		</visual>
+		<collision name="cam_lens_collision">
+			<geometry>
+				<cylinder radius="${r_camera}" length="${h_camera}"/>
+			</geometry>
+		</collision>
+
+		<!-- chassis -->
+		<visual name="cam_chassis_visual">
+			<origin xyz="0 0 ${-h_camera/2+h_camera/6}" rpy="0 0 0"/>
+			<geometry>
+				<box size="${xy_cam_chassis} ${xy_cam_chassis} ${h_camera/3}" />
+			</geometry>
+			<material name="grey"/>
+		</visual>
+		<collision name="cam_chassis_collision">
+			<geometry>
+				<box size="${xy_cam_chassis} ${xy_cam_chassis} ${h_camera/3}" />
+			</geometry>
+		</collision>
+	</link>
+
+	<joint type="fixed" name="base_link_to_cam">
+		<origin xyz="${h_camera/2+0.015*2+x_radar+(x_rpybat/2+offset_rpybat)} 0 ${xy_cam_chassis/2+z_chassis/2}" rpy="0 1.5707 0"/>
+		<child link="camera"/>
+		<parent link="base_link"/>
+	</joint>
+
 
 	<!-- Add the wheels for the robot -->
 	<link name="left_wheel">
