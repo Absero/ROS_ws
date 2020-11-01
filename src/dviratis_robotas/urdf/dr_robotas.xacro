@@ -1,100 +1,152 @@
-<?xml version="1.0"?>
+<?xml version='1.0'?>
+
+<!-- choose a name space and start xacro -->
 <robot name="dr_robotas"
-  xmlns:xacro="http://www.ros.org/wiki/xacro">
+    xmlns:xacro="http://www.ros.org/wiki/xacro">
 
-  <xacro:include filename="$(find dviratis_robotas)/urdf/macros.xacro" />
-  <xacro:include filename="$(find dviratis_robotas)/urdf/gazebo.gazebo" />
+    <!-- Start by including all required xacro files which hold the macros -->
+    <xacro:include filename="$(find dviratis_robotas)/urdf/diff_drive.gazebo" />
+    <xacro:include filename="$(find dviratis_robotas)/urdf/materials.xacro" />
+    <xacro:include filename="$(find dviratis_robotas)/urdf/macros.xacro" />
+    <xacro:include filename="$(find dviratis_robotas)/urdf/parameter.xacro" />
 
-  <!-- links -->
-  <link name="chassis_link">
-    <visual name="chassis_link_visual">
-      <geometry>
-        <box size="${total_length} ${total_width} ${base_z}" />
-      </geometry>
-      <origin xyz="${(total_length-pcb_x)/2+pcb_x_offset-base_padding} 0 0"/>
-      <material name="orange"/>
-    </visual>
-    <collision name="chassis_link_collision">
-      <geometry>
-        <box size="${total_length} ${total_width} ${base_z}" />
-      </geometry>
-      <origin xyz="${(total_length-pcb_x)/2+pcb_x_offset-base_padding} 0 0"/>
-    </collision>
-  </link>
+    <!-- Create a dummy link as base link -->
+    <link name='base_link'>
+        <pose>0 0 0 0 0 0</pose>
+    </link>
+    <joint type="fixed" name="base_link_to_chassis">
+        <child link="chassis_link"/>
+        <parent link="base_link"/>
+    </joint>
 
-  <link name="pcb">
-    <visual>
-      <geometry>
-        <box size="${pcb_x} ${pcb_y} ${pcb_z}" />
-      </geometry>
-      <material name="green"/>
-    </visual>
-  </link>
+    <!-- Define the chassis of the differential drive robot, which is our base -->
+    <link name='chassis_link'>
+        <!-- Define inertial system for the chassis -->
+        <inertial>
+            <mass value="${m_chassis}"/>
+            <xacro:box_inertia m="${m_chassis}" x="${x_chassis}" y="${y_chassis}" z="${z_chassis}"/>
+        </inertial>
+        <!-- Define collision sorrounding box -->
+        <collision name='collision'>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <geometry>
+                <box size="${x_chassis} ${y_chassis} ${z_chassis}"/>
+            </geometry>
+        </collision>
+        <!-- Define visualization structure -->
+        <visual name='base_link_visual'>
+            <origin xyz="0 0 0" rpy=" 0 0 0"/>
+            <geometry>
+                <box size="${x_chassis} ${y_chassis} ${z_chassis}"/>
+            </geometry>
+        </visual>
 
-  <xacro:battery_and_rpy name="link_blokas" x="${gap_pcb_bat+(batt_x+pcb_x)/2+pcb_x_offset}" y="${0}" z="${(batt_z+base_z)/2}"/>
-  <xacro:wheel_link name="right_wheel_link"/>
-  <xacro:wheel_link name="left_wheel_link"/>
+        <!-- Add the caster wheel! Here we simply assume complete slippage, thus we do not require that it rotates! -->
+        <collision name='caster_collision'>
+            <origin xyz="${-(r_wheel/2)+x_chassis/2} 0 ${-r_wheel/2-z_chassis/2}" rpy=" 0 0 0"/>
+            <geometry>
+                <sphere radius="${r_wheel/2}"/>
+            </geometry>
+            <surface>
+                <friction>
+                    <ode>
+                        <mu>0</mu>
+                        <mu2>0</mu2>
+                        <slip1>1.0</slip1>
+                        <slip2>1.0</slip2>
+                    </ode>
+                </friction>
+            </surface>
+        </collision>
+        <visual name='caster_visual'>
+            <origin xyz="${-(r_wheel/2)+x_chassis/2} 0 ${-r_wheel/2-z_chassis/2}" rpy=" 0 0 0"/>
+            <geometry>
+                <sphere radius="${r_wheel/2}"/>
+            </geometry>
+        </visual>
 
-  <link name="caster_front_link">
-    <visual name='caster_visual'>
-      <geometry>
-        <sphere radius="${caster_wheel_r}"/>
-      </geometry>
-    </visual>
-    <collision name='caster_collision'>
-      <geometry>
-        <sphere radius="${caster_wheel_r}"/>
-      </geometry>
-      <surface>
-        <friction>
-          <ode>
-            <mu>0</mu>
-            <mu2>0</mu2>
-            <slip1>1.0</slip1>
-            <slip2>1.0</slip2>
-          </ode>
-        </friction>
-      </surface>
-    </collision>
-  </link>
+    </link>
 
-  <!-- joints -->
-  <joint name="base_to_caster" type="fixed">
-    <parent link="chassis_link"/>
-    <child link="caster_front_link"/>
-    <origin xyz="${(total_length-pcb_x)+pcb_x_offset-base_padding} 0 -${caster_wheel_r+pcb_z/2}"/>
-  </joint>
+    <!-- Add the wheels for the robot -->
+    <link name="left_wheel">
+        <collision name="collision">
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="${r_wheel}" length="${h_wheel}"/>
+            </geometry>
+            <surface>
+                <friction>
+                    <ode>
+                        <mu>1.0</mu>
+                        <mu2>1.0</mu2>
+                        <slip1>0.0</slip1>
+                        <slip2>0.0</slip2>
+                    </ode>
+                </friction>
+            </surface>
+        </collision>
+        <visual name="left_wheel_visual">
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="${r_wheel}" length="${h_wheel}"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <mass value="${m_wheel}"/>
+            <cylinder_inertia m="${m_wheel}" r="${r_wheel}" h="${h_wheel}"/>
+            <xacro:cylinder_inertia m="${m_wheel}" r="${r_wheel}" h="${h_wheel}"/>
+        </inertial>
+    </link>
 
-  <joint name="base_to_pcb" type="fixed">
-    <parent link="chassis_link"/>
-    <child link="pcb"/>
-    <origin xyz="${pcb_x_offset} 0 ${pcb_z/2+base_z/2}"/>
-  </joint>
+    <link name="right_wheel">
+        <collision name="collision">
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="${r_wheel}" length="${h_wheel}"/>
+            </geometry>
+            <surface>
+                <friction>
+                    <ode>
+                        <mu>1.0</mu>
+                        <mu2>1.0</mu2>
+                        <slip1>0.0</slip1>
+                        <slip2>0.0</slip2>
+                    </ode>
+                </friction>
+            </surface>
+        </collision>
+        <visual name="right_wheel_visual">
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <geometry>
+                <cylinder radius="${r_wheel}" length="${h_wheel}"/>
+            </geometry>
+        </visual>
+        <inertial>
+            <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
+            <mass value="${m_wheel}"/>
+            <cylinder_inertia m="${m_wheel}" r="${r_wheel}" h="${h_wheel}"/>
+            <xacro:cylinder_inertia m="${m_wheel}" r="${r_wheel}" h="${h_wheel}"/>
+        </inertial>
+    </link>
 
-  <joint name="base_to_rwheel" type="continuous">
-    <parent link="chassis_link"/>
-    <child link="right_wheel_link"/>
-    <origin xyz="0 ${-(wheel_w+total_width)/2} -${motor_r+pcb_z/2}"/>
-    <limit effort="10000" velocity="1000"/>
-    <joint_properties damping="1.0" friction="1.0"/>
-  </joint>
+    <!-- Set joints for the wheels which can be controlled over ROS -->
+    <joint type="continuous" name="left_wheel_hinge">
+        <origin xyz="${-x_chassis/4} ${y_chassis/2+h_wheel/2} ${-z_chassis/2}" rpy="0 0 0"/>
+        <child link="left_wheel"/>
+        <parent link="base_link"/>
+        <axis xyz="0 1 0" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
 
-  <joint name="base_to_lwheel" type="continuous">
-    <parent link="chassis_link"/>
-    <child link="left_wheel_link"/>
-    <origin xyz="0 ${(wheel_w+total_width)/2} -${motor_r+pcb_z/2}"/>
-    <limit effort="10000" velocity="1000"/>
-    <joint_properties damping="1.0" friction="1.0"/>
-  </joint>
-
-  <!-- Create a dummy link as base link -->
-  <link name='base_link'>
-    <pose>0 0 0 0 0 0</pose>
-  </link>
-
-  <joint type="fixed" name="base_link_to_chassis">
-    <child link="chassis_link"/>
-    <parent link="base_link"/>
-  </joint>
+    <joint type="continuous" name="right_wheel_hinge">
+        <origin xyz="${-x_chassis/4} ${-y_chassis/2-h_wheel/2} ${-z_chassis/2}" rpy="0 0 0"/>
+        <child link="right_wheel"/>
+        <parent link="base_link"/>
+        <axis xyz="0 1 0" rpy="0 0 0"/>
+        <limit effort="100" velocity="100"/>
+        <joint_properties damping="0.0" friction="0.0"/>
+    </joint>
 
 </robot>
