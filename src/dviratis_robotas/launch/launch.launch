@@ -4,10 +4,6 @@
     <arg name="model" default="$(find dviratis_robotas)/urdf/dr_robotas.xacro"/>
     <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model)" />
 
-    <!-- This command builds the urdf files from the xacro files by calling the launch file -->
-    <!-- Spawn the robot after we built the urdf files -->
-    <node name="diff_drive_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model dr_robotas" />
-
     <!-- Publish the states -->
     <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
     <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>

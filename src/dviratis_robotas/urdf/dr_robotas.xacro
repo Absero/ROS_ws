@@ -39,6 +39,32 @@
             <geometry>
                 <box size="${x_chassis} ${y_chassis} ${z_chassis}"/>
             </geometry>
+            <material name="yellow"/>
+        </visual>
+
+        <!-- RPY and batt block -->
+        <visual name='batt_rpy_collision'>
+            <origin xyz="${-0.03} 0 ${0.02+z_chassis/2}" rpy=" 0 0 0"/>
+            <geometry>
+                <box size="${0.12} ${0.1} ${0.04}" />
+            </geometry>
+            <surface>
+                <friction>
+                    <ode>
+                        <mu>0</mu>
+                        <mu2>0</mu2>
+                        <slip1>1.0</slip1>
+                        <slip2>1.0</slip2>
+                    </ode>
+                </friction>
+            </surface>
+        </visual>
+        <visual name='batt_rpy_visual'>
+            <origin xyz="${-0.03} 0 ${0.02+z_chassis/2}" rpy=" 0 0 0"/>
+            <geometry>
+                <box size="${0.12} ${0.1} ${0.04}" />
+            </geometry>
+            <material name="white"/>
         </visual>
 
         <!-- Add the caster wheel! Here we simply assume complete slippage, thus we do not require that it rotates! -->
@@ -63,8 +89,8 @@
             <geometry>
                 <sphere radius="${r_wheel/2}"/>
             </geometry>
+            <material name="black"/>
         </visual>
-
     </link>
 
     <!-- Add the wheels for the robot -->
@@ -90,6 +116,7 @@
             <geometry>
                 <cylinder radius="${r_wheel}" length="${h_wheel}"/>
             </geometry>
+            <material name="black"/>
         </visual>
         <inertial>
             <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
@@ -121,6 +148,7 @@
             <geometry>
                 <cylinder radius="${r_wheel}" length="${h_wheel}"/>
             </geometry>
+            <material name="black"/>
         </visual>
         <inertial>
             <origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
