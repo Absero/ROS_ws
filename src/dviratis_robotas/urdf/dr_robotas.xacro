@@ -43,7 +43,7 @@
         </visual>
 
         <!-- RPY and batt block -->
-        <visual name='batt_rpy_collision'>
+        <collision name='batt_rpy_collision'>
             <origin xyz="${-0.03} 0 ${0.02+z_chassis/2}" rpy=" 0 0 0"/>
             <geometry>
                 <box size="${0.12} ${0.1} ${0.04}" />
@@ -58,13 +58,15 @@
                     </ode>
                 </friction>
             </surface>
-        </visual>
+        </collision>
         <visual name='batt_rpy_visual'>
             <origin xyz="${-0.03} 0 ${0.02+z_chassis/2}" rpy=" 0 0 0"/>
             <geometry>
                 <box size="${0.12} ${0.1} ${0.04}" />
             </geometry>
-            <material name="white"/>
+            <material name="red">
+                <color rgba="0.80078125 0.12890625 0.1328125 1.0"/>
+            </material>
         </visual>
 
         <!-- Add the caster wheel! Here we simply assume complete slippage, thus we do not require that it rotates! -->
