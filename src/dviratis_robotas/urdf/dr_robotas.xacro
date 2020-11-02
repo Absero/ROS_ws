@@ -98,6 +98,7 @@
 	<!-- Radar -->
 	<link name="radar">
 		<visual>
+			<origin xyz="0 0 ${-z_radar/4}" rpy="0 0 0"/>
 			<geometry>
 				<box size="${x_radar} ${y_radar} ${z_radar}" />
 			</geometry>
@@ -111,21 +112,23 @@
 	</link>
 
 	<joint type="fixed" name="base_link_to_radar">
-		<origin xyz="${0.015+x_radar/2+x_rpybat/2+offset_rpybat} 0 ${z_radar/2+z_chassis/2}" rpy="0 0 0"/>
+		<origin xyz="${0.015+x_radar/2+x_rpybat/2+offset_rpybat} 0 ${z_radar/2+z_chassis/2+z_radar/4}" rpy="0 0 0"/>
 		<child link="radar"/>
 		<parent link="base_link"/>
 	</joint>
 
 	<!-- Camera -->
-	<link name="camera">
+	<link name="camera_link">
 		<!-- lens -->
 		<visual name="cam_lens_visual">
+			<origin xyz="0 0 0" rpy="0 1.5707 0"/>
 			<geometry>
 				<cylinder radius="${r_camera}" length="${h_camera}"/>
 			</geometry>
 			<material name="grey"/>
 		</visual>
 		<collision name="cam_lens_collision">
+			<origin xyz="0 0 0" rpy="0 1.5707 0"/>
 			<geometry>
 				<cylinder radius="${r_camera}" length="${h_camera}"/>
 			</geometry>
@@ -133,9 +136,9 @@
 
 		<!-- chassis -->
 		<visual name="cam_chassis_visual">
-			<origin xyz="0 0 ${-h_camera/2+h_camera/6}" rpy="0 0 0"/>
+			<origin xyz="${-h_camera/2+h_camera/4} 0 0" rpy="0 0 0"/>
 			<geometry>
-				<box size="${xy_cam_chassis} ${xy_cam_chassis} ${h_camera/3}" />
+				<box size="${h_camera/2} ${xy_cam_chassis} ${xy_cam_chassis}" />
 			</geometry>
 			<material name="grey"/>
 		</visual>
@@ -147,8 +150,8 @@
 	</link>
 
 	<joint type="fixed" name="base_link_to_cam">
-		<origin xyz="${h_camera/2+0.015*2+x_radar+(x_rpybat/2+offset_rpybat)} 0 ${xy_cam_chassis/2+z_chassis/2}" rpy="0 1.5707 0"/>
-		<child link="camera"/>
+		<origin xyz="${h_camera/2+0.015*2+x_radar+(x_rpybat/2+offset_rpybat)} 0 ${xy_cam_chassis/2+z_chassis/2}" rpy="0 0 0"/>
+		<child link="camera_link"/>
 		<parent link="base_link"/>
 	</joint>
 
