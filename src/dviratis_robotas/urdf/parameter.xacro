@@ -3,8 +3,8 @@
 
     <!-- Define parameter for the differential drive robot -->
     <!-- Parameter for the chassis, size [m] and mass [kg] -->
-    <xacro:property name="x_chassis" value="0.22" />
-    <xacro:property name="y_chassis" value="0.12" />
+    <xacro:property name="x_chassis" value="0.24" />
+    <xacro:property name="y_chassis" value="0.14" />
     <xacro:property name="z_chassis" value="0.01" />
     <xacro:property name="m_chassis" value="1.0" />
 
@@ -12,7 +12,7 @@
     <xacro:property name="x_rpybat" value="0.12" />
     <xacro:property name="y_rpybat" value="0.1" />
     <xacro:property name="z_rpybat" value="0.04" />
-    <xacro:property name="offset_rpybat" value="-0.01" />
+    <xacro:property name="offset_rpybat" value="-0.00" />
 
     <!-- Parameter for the wheels, radius [m], height [m], mass [kg], torque [Nm], wheelbase [m] -->
     <xacro:property name="r_wheel" value="0.035"/>
@@ -31,4 +31,8 @@
     <xacro:property name="y_radar" value="0.065" />
     <xacro:property name="z_radar" value="0.085" />
 
+    <!-- PCB -->
+    <xacro:property name="x_pcb" value="0.04" />
+    <xacro:property name="y_pcb" value="0.06" />
+    <xacro:property name="z_pcb" value="0.005" />
 </robot>

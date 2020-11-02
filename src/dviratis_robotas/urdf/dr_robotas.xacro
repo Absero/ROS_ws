@@ -155,6 +155,25 @@
 		<parent link="base_link"/>
 	</joint>
 
+	<link name="pcb_link">
+		<visual name="pcb_link_visual">
+			<geometry>
+				<box size="${x_pcb} ${y_pcb} ${z_pcb}" />
+			</geometry>
+			<material name="green"/>
+		</visual>
+		<collision name="pcb_link_collision">
+			<geometry>
+				<box size="${x_pcb} ${y_pcb} ${z_pcb}" />
+			</geometry>
+		</collision>
+	</link>
+
+	<joint type="fixed" name="base_link_to_pcb">
+		<origin xyz="${-(x_pcb/2+x_rpybat/2-offset_rpybat+0.01)} 0 ${z_pcb/2+z_chassis/2}" rpy="0 0 0"/>
+		<child link="pcb_link"/>
+		<parent link="base_link"/>
+	</joint>
 
 	<!-- Add the wheels for the robot -->
 	<link name="left_wheel">
