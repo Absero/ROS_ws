@@ -21,12 +21,14 @@ def talker():
     rospy.init_node('talker', anonymous=True)
     rate = rospy.Rate(10)  # 10hz
 
+    dataToPublish = USB_message()
+
     while not rospy.is_shutdown():
         if serial_port.in_waiting > 0:
-            data = serial_port.read_all()
-            rospy.loginfo('Published %s bytes> "%s"' % (len(data), data))
-            pub.publish("data")
-
+            dataToPublish.array = serial_port.read_all()
+            rospy.loginfo('Published %s bytes> "%s"' %
+                          (len(dataToPublish.array), dataToPublish.array))
+            pub.publish(dataToPublish)
         rate.sleep()
 
 
