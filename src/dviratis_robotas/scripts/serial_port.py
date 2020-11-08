@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 import rospy
-from std_msgs.msg import String
+from dviratis_robotas.msg import USB_message
 import serial
 import sys
 
@@ -17,17 +17,15 @@ def talker():
     serial_port = serial.Serial(port, timeout=0)
     serial_port.flush
 
-    pub = rospy.Publisher('chatter', String, queue_size=10)
+    pub = rospy.Publisher('USB_message', USB_message, queue_size=10)
     rospy.init_node('talker', anonymous=True)
     rate = rospy.Rate(10)  # 10hz
 
     while not rospy.is_shutdown():
-        hello_str = ""
         if serial_port.in_waiting > 0:
-            dummy = serial_port.read_all()
-            hello_str = "%s | %s" % (dummy, len(dummy))
-            rospy.loginfo(hello_str)
-            pub.publish(hello_str)
+            data = serial_port.read_all()
+            rospy.loginfo('Published %s bytes> "%s"' % (len(data), data))
+            pub.publish("data")
 
         rate.sleep()
 
