@@ -14,6 +14,7 @@ find_package(catkin REQUIRED COMPONENTS
   gazebo_ros
   message_generation
   std_msgs
+  pointcloud_to_laserscan
 )
 
 ## System dependencies are found with CMake's conventions
