@@ -6,7 +6,7 @@
     <xacro:property name="x_chassis" value="0.24" />
     <xacro:property name="y_chassis" value="0.14" />
     <xacro:property name="z_chassis" value="0.01" />
-    <xacro:property name="m_chassis" value="1.0" />
+    <xacro:property name="m_chassis" value="0.5" />
 
     <!-- RPY and battery -->
     <xacro:property name="x_rpybat" value="0.12" />

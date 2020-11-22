@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- This command builds the urdf files from the xacro files by calling the launch file -->
+    <arg name="model" default="$(find dviratis_robotas)/urdf/dr_robotas.xacro"/>
+
+    <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
+
+    <!-- Publish the states -->
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
+
+    <!-- Launch Gmapping -->
+    <!-- <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
+        <param name="scan"          value="scan"/>
+        <param name="odom_frame"    value="pcb_link"/>
+        <param name="base_frame"    value="base_link"/>
+    </node> -->
+
+    <!-- launch rviz -->
+    <node type="rviz" name="rviz" pkg="rviz" args="-d $(find dviratis_robotas)/config/rviz_config.rviz" />
+
+</launch>

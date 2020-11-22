@@ -15,6 +15,7 @@ find_package(catkin REQUIRED COMPONENTS
   message_generation
   std_msgs
   pointcloud_to_laserscan
+  gmapping
 )
 
 ## System dependencies are found with CMake's conventions

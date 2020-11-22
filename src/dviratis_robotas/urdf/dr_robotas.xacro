@@ -182,16 +182,6 @@
 			<geometry>
 				<cylinder radius="${r_wheel}" length="${h_wheel}"/>
 			</geometry>
-			<surface>
-				<friction>
-					<ode>
-						<mu>1.0</mu>
-						<mu2>1.0</mu2>
-						<slip1>0.0</slip1>
-						<slip2>0.0</slip2>
-					</ode>
-				</friction>
-			</surface>
 		</collision>
 		<visual name="left_wheel_visual">
 			<origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
@@ -214,16 +204,6 @@
 			<geometry>
 				<cylinder radius="${r_wheel}" length="${h_wheel}"/>
 			</geometry>
-			<surface>
-				<friction>
-					<ode>
-						<mu>1.0</mu>
-						<mu2>1.0</mu2>
-						<slip1>0.0</slip1>
-						<slip2>0.0</slip2>
-					</ode>
-				</friction>
-			</surface>
 		</collision>
 		<visual name="right_wheel_visual">
 			<origin xyz="0 0 0" rpy="0 1.5707 1.5707"/>
@@ -246,8 +226,8 @@
 		<child link="left_wheel"/>
 		<parent link="base_link"/>
 		<axis xyz="0 1 0" rpy="0 0 0"/>
-		<limit effort="100" velocity="100"/>
-		<joint_properties damping="0.0" friction="0.0"/>
+		<limit effort="10000" velocity="1000"/>
+		<joint_properties damping="1.0" friction="1.0"/>
 	</joint>
 
 	<joint type="continuous" name="right_wheel_hinge">
@@ -255,8 +235,8 @@
 		<child link="right_wheel"/>
 		<parent link="base_link"/>
 		<axis xyz="0 1 0" rpy="0 0 0"/>
-		<limit effort="100" velocity="100"/>
-		<joint_properties damping="0.0" friction="0.0"/>
+		<limit effort="10000" velocity="1000"/>
+		<joint_properties damping="1.0" friction="1.0"/>
 	</joint>
 
 </robot>
