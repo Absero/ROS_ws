@@ -6,7 +6,7 @@
     <xacro:property name="x_chassis" value="0.24" />
     <xacro:property name="y_chassis" value="0.14" />
     <xacro:property name="z_chassis" value="0.01" />
-    <xacro:property name="m_chassis" value="0.5" />
+    <xacro:property name="m_chassis" value="2" />
 
     <!-- RPY and battery -->
     <xacro:property name="x_rpybat" value="0.12" />
@@ -17,9 +17,9 @@
     <!-- Parameter for the wheels, radius [m], height [m], mass [kg], torque [Nm], wheelbase [m] -->
     <xacro:property name="r_wheel" value="0.035"/>
     <xacro:property name="h_wheel" value="0.025" />
-    <xacro:property name="m_wheel" value="0.03" />
-    <xacro:property name="torque_wheel" value="10" />
-    <xacro:property name="L_wheel" value="0.00" />
+    <xacro:property name="m_wheel" value="0.5" />
+    <xacro:property name="torque_wheel" value="1" />
+    <xacro:property name="L_wheel" value="${y_chassis+2*h_wheel}" />
 
     <!-- Camera parameters -->
     <xacro:property name="r_camera" value="0.01" />

@@ -2,7 +2,7 @@
 <launch>
     <!-- Define arguments -->
     <arg name="world" default="empty"/>
-    <arg name="paused" default="true"/>
+    <arg name="paused" default="false"/>
     <arg name="use_sim_time" default="true"/>
     <arg name="gui" default="true"/>
     <arg name="headless" default="false"/>
@@ -25,5 +25,4 @@
     <node name="diff_drive_spawn" pkg="gazebo_ros" type="spawn_model" output="screen" args="-urdf -param robot_description -model dr_robotas -x $(arg x) -y $(arg y) -z $(arg z) " />
 
     <include file="$(find dviratis_robotas)/launch/common.launch"/>
-
 </launch>

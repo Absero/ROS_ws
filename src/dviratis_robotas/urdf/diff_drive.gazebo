@@ -9,12 +9,12 @@
       <updateRate>20</updateRate>
       <leftJoint>left_wheel_hinge</leftJoint>
       <rightJoint>right_wheel_hinge</rightJoint>
-      <wheelSeparation>${L_wheel*2}</wheelSeparation>
+      <wheelSeparation>${L_wheel}</wheelSeparation>
       <wheelDiameter>${r_wheel*2}</wheelDiameter>
-      <torque>20</torque>
+      <torque>${torque_wheel}</torque>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
-      <odometryFrame>pcb_link</odometryFrame>
+      <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_link</robotBaseFrame>
       <legacyMode>false</legacyMode>
     </plugin>
@@ -25,7 +25,7 @@
     <material>Gazebo/Red</material>
     <sensor type="ray" name="head_hokuyo_sensor">
       <pose>0 0 0 0 0 0</pose>
-      <visualize>true</visualize>
+      <visualize>false</visualize>
       <update_rate>20</update_rate>
       <ray>
         <scan>
