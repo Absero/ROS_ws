@@ -14,7 +14,7 @@
       <torque>${torque_wheel}</torque>
       <commandTopic>cmd_vel</commandTopic>
       <odometryTopic>odom</odometryTopic>
-      <odometryFrame>pcb_link</odometryFrame>
+      <odometryFrame>odom</odometryFrame>
       <robotBaseFrame>base_link</robotBaseFrame>
       <legacyMode>false</legacyMode>
     </plugin>

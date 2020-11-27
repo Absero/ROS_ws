@@ -22,7 +22,7 @@
 
         <!-- Set up the solver used for simulation -->
         <physics name="ode_70iters" type="ode">
-            <real_time_update_rate>5000</real_time_update_rate>
+            <real_time_update_rate>1000</real_time_update_rate>
             <ode>
                 <solver>
                     <type>quick</type>
