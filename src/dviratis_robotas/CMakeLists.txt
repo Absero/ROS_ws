@@ -16,6 +16,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
   pointcloud_to_laserscan
   gmapping
+  robot_localization
 )
 
 ## System dependencies are found with CMake's conventions

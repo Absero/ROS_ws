@@ -159,6 +159,10 @@
 				<box size="${x_pcb} ${y_pcb} ${z_pcb}" />
 			</geometry>
 		</collision>
+		<inertial>
+			<mass value="${m_pcb}"/>
+			<xacro:box_inertia m="${m_pcb}" x="${x_pcb}" y="${y_pcb}" z="${z_pcb}"/>
+		</inertial>
 	</link>
 
 	<joint type="fixed" name="base_link_to_pcb">
