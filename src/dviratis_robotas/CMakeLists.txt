@@ -56,6 +56,7 @@ find_package(catkin REQUIRED COMPONENTS
 add_message_files(
   FILES
   USB_message.msg
+  AccGyr_msg.msg
 )
 
 ## Generate services in the 'srv' folder
