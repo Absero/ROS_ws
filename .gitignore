@@ -4,3 +4,4 @@ build
 .vs/VSWorkspaceState.json
 devel
 .vscode
+src/livox_ros_driver/Livox-SDK
