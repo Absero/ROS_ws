@@ -5,9 +5,15 @@
 
     <param name="robot_description" command="$(find xacro)/xacro $(arg model)" />
 
-    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
-        <rosparam command="load" file="$(find dviratis_robotas)/config/ekf_template.yaml" />
+    <!-- Publish the states -->
+    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher">
+        <param name="use_tf_static" value="false"/>
     </node>
+    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
+
+    <!-- <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find dviratis_robotas)/config/ekf_template.yaml" />
+    </node> -->
 
     <!-- Launch Gmapping -->
     <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
@@ -15,10 +21,6 @@
         <param name="odom_frame"    value="odom"/>
         <param name="base_frame"    value="base_link"/>
     </node>
-
-    <!-- Publish the states -->
-    <node pkg="robot_state_publisher" type="robot_state_publisher" name="robot_state_publisher"/>
-    <node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
 
     <!-- launch rviz -->
     <node type="rviz" name="rviz" pkg="rviz" args="-d $(find dviratis_robotas)/config/rviz_config.rviz" />
