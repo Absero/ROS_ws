@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
 
-    <!-- <include file="$(find livox_ros_driver)/launch/livox_lidar_rviz.launch">
+    <include file="$(find livox_ros_driver)/launch/livox_lidar_rviz.launch">
         <arg name="msg_frame_id" value="radar"/>
         <arg name="rviz_enable" value="false"/>
     </include>
@@ -9,7 +9,9 @@
     <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
       <remap from="cloud_in" to="/livox/lidar"/>
       <remap from="scan" to="/scan" />
-    </node> -->
+    </node>
+
+    <node pkg="dviratis_robotas" type="odometry_publisher.py" name="odometry"/>
 
     <include file="$(find dviratis_robotas)/launch/common.launch"/>
 
