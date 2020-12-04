@@ -11,7 +11,6 @@
       <remap from="cloud_in" to="/livox/lidar"/>
       <remap from="scan" to="scan1" />
     </node>
-
     <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/>
 
     <node pkg="dviratis_robotas" type="odometry_publisher.py" name="odometry"/>

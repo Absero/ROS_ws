@@ -96,11 +96,6 @@
 			</geometry>
 			<material name="red"/>
 		</visual>
-		<collision>
-			<geometry>
-				<box size="${x_radar} ${y_radar} ${z_radar}" />
-			</geometry>
-		</collision>
 	</link>
 
 	<joint type="fixed" name="base_link_to_radar">

@@ -16,11 +16,10 @@
     </node> -->
 
     <!-- Launch Gmapping -->
-    <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
+    <!-- <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
         <param name="scan"          value="scan"/>
-        <param name="odom_frame"    value="odom"/>
         <param name="base_frame"    value="base_link"/>
-    </node>
+    </node> -->
 
     <!-- launch rviz -->
     <node type="rviz" name="rviz" pkg="rviz" args="-d $(find dviratis_robotas)/config/rviz_config.rviz" />
