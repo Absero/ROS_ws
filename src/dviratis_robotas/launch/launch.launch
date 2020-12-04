@@ -10,6 +10,8 @@
     <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
       <remap from="cloud_in" to="/livox/lidar"/>
       <remap from="scan" to="scan1" />
+      <param name="use_inf" value="false"/>
+      <param name="range_max" value="100"/>
     </node>
     <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/>
 

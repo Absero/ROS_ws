@@ -19,7 +19,7 @@ th = 0.0
 
 vx = 0.0
 vy = 0.0
-vth = 0.0
+vth = 0.1
 
 current_time = rospy.Time.now()
 last_time = rospy.Time.now()
