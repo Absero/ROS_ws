@@ -42,13 +42,13 @@ while not rospy.is_shutdown():
     odom_quat = tf.transformations.quaternion_from_euler(0, 0, th)
 
     # first, we'll publish the transform over tf
-    odom_broadcaster.sendTransform(
-        (x, y, 0.),
-        odom_quat,
-        current_time,
-        "base_link",
-        "odom"
-    )
+    # odom_broadcaster.sendTransform(
+    #     (x, y, 0.),
+    #     odom_quat,
+    #     current_time,
+    #     "base_link",
+    #     "odom"
+    # )
 
     # next, we'll publish the odometry message over ROS
     odom = Odometry()
