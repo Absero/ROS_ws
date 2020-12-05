@@ -7,26 +7,29 @@ import rospy
 import tf
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
+from dviratis_robotas.msg import AccGyr_msg
 
-rospy.init_node('odometry_publisher')
+
+maxValues = 25  # siuntimo daznis = gavimoDaznis/maxValues
 
 odom_pub = rospy.Publisher("odom", Odometry, queue_size=50)
-odom_broadcaster = tf.TransformBroadcaster()
-
 x = 0.0
 y = 0.0
 th = 0.0
 
 vx = 0.0
 vy = 0.0
-vth = 0
 
-current_time = rospy.Time.now()
-last_time = rospy.Time.now()
+current_time = rospy.Time(0)
+last_time = rospy.Time(0)
 
-r = rospy.Rate(10.0)
-while not rospy.is_shutdown():
+
+def publisher(data):
+    global x, y, th, vx, vy, current_time, last_time
+
     current_time = rospy.Time.now()
+
+    vth = data.gyro[2]
 
     # compute odometry in a typical way given the velocities of the robot
     dt = (current_time - last_time).to_sec()
@@ -40,6 +43,8 @@ while not rospy.is_shutdown():
 
     # since all odometry is 6DOF we'll need a quaternion created from yaw
     odom_quat = tf.transformations.quaternion_from_euler(0, 0, th)
+
+    odom_broadcaster = tf.TransformBroadcaster()
 
     # first, we'll publish the transform over tf
     odom_broadcaster.sendTransform(
@@ -66,4 +71,20 @@ while not rospy.is_shutdown():
     odom_pub.publish(odom)
 
     last_time = current_time
-    r.sleep()
+
+
+def listener():
+    global current_time, last_time
+    rospy.init_node('DeadReckoning', anonymous=True)
+
+    current_time = rospy.Time.now()
+    last_time = rospy.Time.now()
+
+    rospy.Subscriber('AccGyr_msg', AccGyr_msg, publisher)
+
+    # spin() simply keeps python from exiting until this node is stopped
+    rospy.spin()
+
+
+if __name__ == '__main__':
+    listener()

@@ -15,7 +15,8 @@
     </node>
     <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/>
 
-    <node pkg="dviratis_robotas" type="odometry_publisher.py" name="odometry"/>
+    <node pkg="dviratis_robotas" type="serial_port.py" name="serial_port"/>
+    <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/>
 
     <include file="$(find dviratis_robotas)/launch/common.launch"/>
 
