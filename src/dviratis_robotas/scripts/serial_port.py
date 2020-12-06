@@ -5,17 +5,21 @@ from dviratis_robotas.msg import AccGyr_msg
 import serial
 import sys
 from numpy import int16
+from math import pi
 
 # settings
 accFS = 8  # 2 4 8 16
 gyroFS = 1000   # 250 500 1000 2000
-frequency = 25  # nuskaitymo daznis
+frequency = 100  # nuskaitymo daznis
 
 
 def talker():
     port = '/dev/ttyACM0'
     acc_values = [0]*3
     gyr_values = [0]*3
+
+    offset_x = 0
+    offset_y = 0
 
     args = rospy.myargv(argv=sys.argv)
     if len(args) == 2:
@@ -41,7 +45,14 @@ def talker():
                     acc_values[i] = int16(((array[2*i] & 0xff) << 8) | (array[2*i+1] & 0xff)) * \
                         accFS / 32768 * 9.8
                     gyr_values[i] = int16(((array[2*i+8] & 0xff) << 8) | (array[2*i+9] & 0xff)) * \
-                        gyroFS / 32768 * 3.14/180
+                        gyroFS / 32768 * pi/180
+
+                if offset_x == 0 and offset_y == 0:
+                    offset_x = acc_values[0]
+                    offset_y = acc_values[1]
+
+                acc_values[0] = acc_values[0]-offset_x
+                acc_values[1] = acc_values[1]-offset_y
 
                 dataToPublish.acc = acc_values
                 dataToPublish.gyro = gyr_values

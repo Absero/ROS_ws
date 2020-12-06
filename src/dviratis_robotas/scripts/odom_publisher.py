@@ -9,9 +9,6 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Point, Pose, Quaternion, Twist, Vector3
 from dviratis_robotas.msg import AccGyr_msg
 
-
-maxValues = 25  # siuntimo daznis = gavimoDaznis/maxValues
-
 odom_pub = rospy.Publisher("odom", Odometry, queue_size=50)
 x = 0.0
 y = 0.0
@@ -20,40 +17,63 @@ th = 0.0
 vx = 0.0
 vy = 0.0
 
+ax_old = 0.0
+ay_old = 0.0
+ax_old_filt = 0.0
+ay_old_filt = 0.0
+
 current_time = rospy.Time(0)
 last_time = rospy.Time(0)
 
 
 def publisher(data):
-    global x, y, th, vx, vy, current_time, last_time
+    global x, y, th, vx, vy, current_time, last_time, ax_old, ay_old, ax_old_filt, ay_old_filt
 
     current_time = rospy.Time.now()
+    dt = (current_time - last_time).to_sec()
 
+    # naujas kampas
     vth = data.gyro[2]
+    vth = 0
+    delta_th = vth * dt
+    th += delta_th
+
+    # nauji pagreiciai
+    ax = data.acc[0]
+    ay = data.acc[1]
+
+    # perskaiciuoti kiekvienai asiai
+    ax_real = (ax * cos(th) - ay * sin(th)) * dt
+    ay_real = (ax * sin(th) + ay * cos(th)) * dt
+
+    # filtruoti
+    R = 0.995
+    ax = ax_real - ax_old + R * ax_old_filt
+    ay = ay_real - ay_old + R * ay_old_filt
+
+    # issaugoti reiksmes
+    ax_old = ax_real
+    ay_old = ay_real
+
+    ax_old_filt = ax
+    ay_old_filt = ay
+
+    # integruoti reiksmes
+    vx += ax_real
+    vy += ay_real
+
+    rospy.loginfo('{: 04.4f} | {: 04.4f} | {: 04.4f}'.format(
+        vx, ax, th))
 
     # compute odometry in a typical way given the velocities of the robot
-    dt = (current_time - last_time).to_sec()
-    delta_x = (vx * cos(th) - vy * sin(th)) * dt
-    delta_y = (vx * sin(th) + vy * cos(th)) * dt
-    delta_th = vth * dt
+    delta_x = vx * dt
+    delta_y = vy * dt
 
     x += delta_x
     y += delta_y
-    th += delta_th
 
     # since all odometry is 6DOF we'll need a quaternion created from yaw
     odom_quat = tf.transformations.quaternion_from_euler(0, 0, th)
-
-    odom_broadcaster = tf.TransformBroadcaster()
-
-    # first, we'll publish the transform over tf
-    odom_broadcaster.sendTransform(
-        (x, y, 0.),
-        odom_quat,
-        current_time,
-        "base_link",
-        "odom"
-    )
 
     # next, we'll publish the odometry message over ROS
     odom = Odometry()

@@ -3,11 +3,12 @@
     <param name="use_sim_time" value="false"/>
 
     <node pkg="dviratis_robotas" type="serial_port.py" name="serial_port"/>
-    <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/>
+    <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry" output="screen"/>
 
 
-
-
+    <node pkg="robot_localization" type="ekf_localization_node" name="ekf_se" clear_params="true">
+        <rosparam command="load" file="$(find dviratis_robotas)/config/ekf_template.yaml" />
+    </node>
 
     <!-- This command builds the urdf files from the xacro files by calling the launch file -->
     <arg name="model" default="$(find dviratis_robotas)/urdf/dr_robotas.xacro"/>
