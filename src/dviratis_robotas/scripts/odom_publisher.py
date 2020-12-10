@@ -34,13 +34,14 @@ def publisher(data):
 
     # naujas kampas
     vth = data.gyro[2]
-    vth = 0
     delta_th = vth * dt
     th += delta_th
 
     # nauji pagreiciai
-    ax = data.acc[0]
-    ay = data.acc[1]
+    # ax = data.acc[0]
+    # ay = data.acc[1]
+    ax = 0
+    ay = 0
 
     # perskaiciuoti kiekvienai asiai
     ax_real = (ax * cos(th) - ay * sin(th)) * dt
