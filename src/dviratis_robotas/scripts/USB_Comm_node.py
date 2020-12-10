@@ -9,14 +9,14 @@ import serial
 numOfSensData = 14
 sensorPublisher = rospy.Publisher('sensor_raw_data', USB_message, queue_size=10)
 
+serial_port = serial.Serial('/dev/ttyACM0', timeout=0)
+
 
 def callback(data):
-    dataBytes = array.array('B', data.array)
+    dataBytes = data.array
+    rospy.loginfo(''.join('%02X ' % i for i in data.array))
 
-    rospy.loginfo(rospy.get_caller_id() + ' received %s bytes> %s' %
-                  (len(data.array), ''.join('%02X ' % i for i in dataBytes)))
-
-    if(dataBytes[0] == 'S'):
+    if dataBytes[0] == 83:
         # Read sensor data trough usb
 
         # Send data request byte
@@ -33,7 +33,7 @@ def callback(data):
             dataToPublish.array = mcuPacket
             sensorPublisher.publish(dataToPublish)
 
-    elif (dataBytes[0] == 'M'):
+    elif dataBytes[0] == 'M':
         # Send motor data trough usb
         pass
 
@@ -43,13 +43,6 @@ def callback(data):
 
 
 def listener():
-    port = '/dev/ttyACM0'
-
-    args = rospy.myargv(argv=sys.argv)
-    if len(args) == 2:
-        port = args[1]
-
-    serial_port = serial.Serial(port, timeout=0)
     serial_port.flush
 
     rospy.init_node('listener', anonymous=True)
