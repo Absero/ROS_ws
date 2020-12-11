@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <param name="use_sim_time" value="false"/>
+    <node pkg="dviratis_robotas" type="USB_Comm_node.py" name="USB_Comm_node"/>
+    <node pkg="dviratis_robotas" type="AG_calculator.py" name="AG_calculator"/>
+    <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/>
 
     <include file="$(find livox_ros_driver)/launch/livox_lidar_rviz.launch">
         <arg name="msg_frame_id" value="radar"/>
@@ -13,10 +15,8 @@
       <param name="use_inf" value="false"/>
       <param name="range_max" value="100"/>
     </node>
-    <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/>
 
-    <node pkg="dviratis_robotas" type="serial_port.py" name="serial_port"/>
-    <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/>
+    <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/>
 
     <include file="$(find dviratis_robotas)/launch/common.launch"/>
 
