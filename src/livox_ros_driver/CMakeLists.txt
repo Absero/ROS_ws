@@ -89,9 +89,8 @@ if((NOT LIVOX_SDK_LIBRARY) OR (NOT EXISTS ${LIVOX_SDK_LIBRARY}))
 	# couldn't find the livox sdk library
 	message("Coudn't find livox sdk library!")
 	message("Download Livox-SDK from github and build&install it please!")
-	message("=============================================================================")
-	message("Atkomentuot CMakeLists.txt dali")
-	message("=============================================================================")
+	message("Download Livox-SDK from github and build&install it please!")
+	message("Download Livox-SDK from github and build&install it please!")
 
 	message("git clone Livox-SDK from github temporarily, only for ROS distro jenkins build!")
 

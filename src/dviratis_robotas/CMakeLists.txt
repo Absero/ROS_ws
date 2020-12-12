@@ -131,8 +131,6 @@ include_directories(
 )
 list(APPEND CMAKE_CXX_FLAGS "${GAZEBO_CXX_FLAGS}")
 
-add_executable(odometry_publisher scripts/odometry_publisher.cpp)
-target_link_libraries(odometry_publisher ${catkin_LIBRARIES})
 
 ## Declare a C++ library
 # add_library(${PROJECT_NAME}
