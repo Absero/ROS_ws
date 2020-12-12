@@ -2,8 +2,12 @@
 import rospy
 import cv2
 import numpy as np
+from numpy import int32
+from std_msgs.msg import Int32
 
-cap = cv2.VideoCapture(0)
+frequency = 10  # Hz
+
+cap = cv2.VideoCapture(2)
 whT = 320
 confThreshold = 0.5
 nmsThreshold = 0.01
@@ -20,6 +24,9 @@ modelWeights = '/home/naudotvardis/Workspaces/ROS_ws/src/dviratis_robotas/detect
 net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
+
+result_publisher = rospy.Publisher('DetectionResult_msg', Int32, queue_size=1)
+result_message = Int32()
 
 
 def findObjects(outputs, img):
@@ -39,7 +46,13 @@ def findObjects(outputs, img):
                 bbox.append([x, y, w, h])
                 classIds.append(classId)
                 confs.append(float(confidence))
-    print("Found ", len(bbox))
+
+    rospy.loginfo("Found {}".format(len(bbox)))
+
+    # Publish the number of found objects
+    result_message.data = int32(len(bbox))
+    result_publisher.publish(result_message)
+
     indices = cv2.dnn.NMSBoxes(bbox, confs, confThreshold, nmsThreshold)
     for i in indices:
         i = i[0]
@@ -53,7 +66,7 @@ def findObjects(outputs, img):
 def talker():
     rospy.init_node('ObjectRecognition_node', anonymous=True)
 
-    rate = rospy.Rate(10)  # x hz
+    rate = rospy.Rate(frequency)  # x hz
 
     while not rospy.is_shutdown():
         success, img = cap.read()
