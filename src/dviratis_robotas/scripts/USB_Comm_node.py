@@ -16,11 +16,11 @@ def callback(data):
     dataBytes = data.array
     rospy.loginfo(''.join('%02X ' % i for i in data.array))
 
-    if dataBytes[0] == 83:
+    if dataBytes[0] == ord('S'):
         # Read sensor data trough usb
 
         # Send data request byte
-        serial_port.write(b'!')
+        serial_port.write(ord('!'))
 
         # Wait for mcu to send message
         while serial_port.in_waiting < numOfSensData:
@@ -33,9 +33,9 @@ def callback(data):
             dataToPublish.array = mcuPacket
             sensorPublisher.publish(dataToPublish)
 
-    elif dataBytes[0] == 'M':
+    elif dataBytes[0] == ord('M'):
         # Send motor data trough usb
-        pass
+        serial_port.write(dataBytes)
 
     else:
         # Message unrecognised
