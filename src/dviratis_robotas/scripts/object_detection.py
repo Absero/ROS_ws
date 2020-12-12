@@ -7,7 +7,7 @@ from std_msgs.msg import Int32
 
 frequency = 10  # Hz
 
-cap = cv2.VideoCapture(2)
+cap = cv2.VideoCapture(0)
 whT = 320
 confThreshold = 0.5
 nmsThreshold = 0.01
@@ -82,7 +82,7 @@ def talker():
 
         findObjects(outputs, img)
 
-        cv2.imshow('Image', img)
+        # cv2.imshow('Image', img)
         cv2.waitKey(1)
 
         rate.sleep()
