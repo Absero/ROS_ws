@@ -48,6 +48,7 @@
   <exec_depend>rospy</exec_depend>
   <exec_depend>tf</exec_depend>
   <depend>nav_msgs</depend>
+  <depend>opencv2</depend>
   
 
   <!-- The export tag contains other, unspecified, tags -->

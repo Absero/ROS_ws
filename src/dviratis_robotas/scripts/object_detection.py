@@ -4,10 +4,12 @@ import cv2
 import numpy as np
 from numpy import int32
 from std_msgs.msg import Int32
+from sensor_msgs.msg import Image
+from cv_bridge import CvBridge
 
 frequency = 10  # Hz
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 whT = 320
 confThreshold = 0.5
 nmsThreshold = 0.01
@@ -25,8 +27,11 @@ net = cv2.dnn.readNetFromDarknet(modelConfiguration, modelWeights)
 net.setPreferableBackend(cv2.dnn.DNN_BACKEND_OPENCV)
 net.setPreferableTarget(cv2.dnn.DNN_TARGET_CPU)
 
-result_publisher = rospy.Publisher('DetectionResult_msg', Int32, queue_size=1)
+result_pub = rospy.Publisher('DetectionResult_msg', Int32, queue_size=1)
+image_pub = rospy.Publisher('imagetimer', Image, queue_size=10)
+
 result_message = Int32()
+bridge = CvBridge()
 
 
 def findObjects(outputs, img):
@@ -51,7 +56,7 @@ def findObjects(outputs, img):
 
     # Publish the number of found objects
     result_message.data = int32(len(bbox))
-    result_publisher.publish(result_message)
+    result_pub.publish(result_message)
 
     indices = cv2.dnn.NMSBoxes(bbox, confs, confThreshold, nmsThreshold)
     for i in indices:
@@ -83,6 +88,9 @@ def talker():
         findObjects(outputs, img)
 
         # cv2.imshow('Image', img)
+        cv_image = bridge.cv2_to_imgmsg(img)
+        image_pub.publish(cv_image)
+
         cv2.waitKey(1)
 
         rate.sleep()
