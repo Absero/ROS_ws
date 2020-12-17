@@ -9,7 +9,7 @@ from cv_bridge import CvBridge
 
 frequency = 10  # Hz
 
-cap = cv2.VideoCapture(0)
+cap = cv2.VideoCapture(2)
 whT = 320
 confThreshold = 0.5
 nmsThreshold = 0.01

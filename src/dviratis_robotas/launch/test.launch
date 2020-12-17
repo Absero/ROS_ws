@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <launch>
-    <!-- <node pkg="dviratis_robotas" type="USB_Comm_node.py" name="USB_Comm_node"/>
-    <node pkg="dviratis_robotas" type="AG_calculator.py" name="AG_calculator"/>
-    <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/> -->
+    <node pkg="dviratis_robotas" type="USB_Comm_node.py" name="USB_Comm_node"/>
+    <!-- <node pkg="dviratis_robotas" type="AG_calculator.py" name="AG_calculator"/> -->
+    <!-- <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/> -->
     <node pkg="dviratis_robotas" type="object_detection.py" name="Camera"/>
     <node pkg="dviratis_robotas" type="RobotControl.py" name="MotorNode" output="screen"/>
 

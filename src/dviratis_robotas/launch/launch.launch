@@ -6,19 +6,19 @@
     <node pkg="dviratis_robotas" type="object_detection.py" name="Camera"/>
     <node pkg="dviratis_robotas" type="RobotControl.py" name="MotorNode"/>
 
-    <include file="$(find livox_ros_driver)/launch/livox_lidar_rviz.launch">
+    <!-- <include file="$(find livox_ros_driver)/launch/livox_lidar_rviz.launch">
         <arg name="msg_frame_id" value="radar"/>
         <arg name="rviz_enable" value="false"/>
-    </include>
+    </include> -->
 
-    <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
+    <!-- <node pkg="pointcloud_to_laserscan" type="pointcloud_to_laserscan_node" name="pointcloud_to_laserscan">
       <remap from="cloud_in" to="/livox/lidar"/>
       <remap from="scan" to="scan1" />
       <param name="use_inf" value="false"/>
       <param name="range_max" value="100"/>
-    </node>
+    </node> -->
 
-    <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/>
+    <!-- <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/> -->
 
     <include file="$(find dviratis_robotas)/launch/common.launch"/>
 
