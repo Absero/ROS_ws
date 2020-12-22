@@ -30,7 +30,7 @@ def newCommand(msg):
 
     value = (forward + angle) * 100
     value = value if abs(value) < 100 else sign(value)*100
-    motor_message[1] = uint8(value)
+    motor_message[1] = uint8(-value)
 
     value = (forward - angle) * 100
     value = value if abs(value) < 100 else sign(value)*100
