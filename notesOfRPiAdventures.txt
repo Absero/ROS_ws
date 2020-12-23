@@ -1,0 +1,3 @@
+Nuskaityt ta atstumo jutikli nepaejo be sudo (pradzioj)
+    Pradejo veikt kai painstaliavau i2c paketa i2cdetect, su "i2cdetect -y 1" parode ta lazeri ir atrodo tada gerai buvo,
+    bet pries tai dar daug visokiu reikalu dariau su leidimais pagal https://github.com/gpiozero/gpiozero/issues/837
