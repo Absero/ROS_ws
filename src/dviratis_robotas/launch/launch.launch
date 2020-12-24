@@ -4,7 +4,8 @@
     <node pkg="dviratis_robotas" type="AG_calculator.py" name="AG_calculator"/>
     <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/>
     <!-- <node pkg="dviratis_robotas" type="object_detection.py" name="Camera"/> -->
-    <node pkg="dviratis_robotas" type="RobotControl.py" name="MotorNode"/>
+    <!-- <node pkg="dviratis_robotas" type="RobotControl.py" name="MotorNode"/> -->
+    <node pkg="dviratis_robotas" type="KeyboardControl.py" name="KeyboardControl_node"/>
     <node pkg="dviratis_robotas" type="vl53l0x.py" name="vl53l0x"/>
 
     <!-- <include file="$(find livox_ros_driver)/launch/livox_lidar_rviz.launch">
