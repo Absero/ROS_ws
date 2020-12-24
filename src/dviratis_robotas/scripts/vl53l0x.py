@@ -38,14 +38,14 @@ def main():
         laser_scan.header.stamp = current_time
         laser_scan.header.frame_id = "radar"
 
-        laser_scan.angle_min = -0.15
-        laser_scan.angle_max = 0.15
-        laser_scan.angle_increment = 0.05
+        laser_scan.angle_min = -0.10
+        laser_scan.angle_max = 0.10
+        laser_scan.angle_increment = 0.01
         laser_scan.time_increment = 0
         laser_scan.scan_time = timing
         laser_scan.range_min = 0.030
         laser_scan.range_max = 2.500
-        laser_scan.ranges = [float32(distance/1000)]*7
+        laser_scan.ranges = [float32(distance/1000)]*11
 
         pub_scan.publish(laser_scan)
 
