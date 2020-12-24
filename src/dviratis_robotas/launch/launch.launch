@@ -22,6 +22,6 @@
 
     <!-- <node pkg="dviratis_robotas" type="lidar_republisher.py" name="lidar_republisher"/> -->
 
-    <include file="$(find dviratis_robotas)/launch/common.launch"/>
+    <!-- <include file="$(find dviratis_robotas)/launch/common.launch"/> -->
 
 </launch>
