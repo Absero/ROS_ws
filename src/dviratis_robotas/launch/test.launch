@@ -5,7 +5,7 @@
     <node pkg="dviratis_robotas" type="odom_publisher.py" name="odometry"/>
     <!-- <node pkg="dviratis_robotas" type="object_detection.py" name="Camera"/> -->
     <!-- <node pkg="dviratis_robotas" type="RobotControl.py" name="MotorNode" output="screen"/> -->
-    <node pkg="dviratis_robotas" type="KeyboardControl.py" name="MotorNode" output="screen"/>
+    <node pkg="dviratis_robotas" type="KeyboardControl.py" name="KeyboardControl" output="screen"/>
     <node pkg="dviratis_robotas" type="vl53l0x.py" name="vl53l0x"/>
 
 
