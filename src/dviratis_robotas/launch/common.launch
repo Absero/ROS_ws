@@ -18,6 +18,7 @@
     <!-- Launch Gmapping -->
     <node pkg="gmapping" name="slam_gmapping" type="slam_gmapping" output="screen">
         <param name="scan"          value="scan"/>
+        <param name="map_update_interval"          value="0.5"/>
     </node>
 
     <!-- launch rviz -->
