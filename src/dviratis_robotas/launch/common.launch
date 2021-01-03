@@ -20,7 +20,7 @@
         <param name="scan"          value="scan"/>
         <param name="map_update_interval"          value="1"/>
         <param name="angularUpdate"          value="0.5"/>
-        <param name="iterations"          value="1"/>
+        <param name="iterations"          value="5"/>
     </node>
 
     <!-- launch rviz -->
